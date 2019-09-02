@@ -8,12 +8,12 @@ export const typeDefs = gql`
   type Joke {
     id: Int!
     joke: String!
-    categories: [String]
+    categories: [String!]
   }
 
   type Query {
     joke(id: Int!): Joke!
-    randomJokes(limit: Int!, categories: [String!]): [Joke]
+    randomJokes(limit: Int!, categories: [String!]): [Joke!]
     jokesCount: Int!
     categories: [String!]
   }
