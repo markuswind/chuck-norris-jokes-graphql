@@ -10,19 +10,19 @@ export class JokesAPI extends RESTDataSource {
     this.baseURL = 'http://api.icndb.com/';
   }
 
-  public async getJoke(id: number) {
-    const result = await this.get(`jokes/${id}`);
+  public async getJoke(args: { id: number }) {
+    const result = await this.get(`jokes/${args.id}`);
     return result.value;
   }
 
-  public async getRandomJokes(
-    limit: number,
-    categories?: ReadonlyArray<string>
-  ) {
-    let url = `jokes/random/${limit}`;
+  public async getRandomJokes(args: {
+    limit: number;
+    categories?: ReadonlyArray<string>;
+  }) {
+    let url = `jokes/random/${args.limit}`;
 
-    if (categories && categories.length) {
-      url += `?limitTo=${categories}`;
+    if (args.categories && args.categories.length) {
+      url += `?limitTo=${args.categories}`;
     }
 
     const result = await this.get(url);

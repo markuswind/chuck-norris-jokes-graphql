@@ -25,9 +25,9 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Query: {
-    joke: (_, { id }, { dataSources }) => dataSources.jokesAPI.getJoke(id),
-    randomJokes: (_, { limit, categories }, { dataSources }) =>
-      dataSources.jokesAPI.getRandomJokes(limit, categories),
+    joke: (_, args, { dataSources }) => dataSources.jokesAPI.getJoke(args),
+    randomJokes: (_, args, { dataSources }) =>
+      dataSources.jokesAPI.getRandomJokes(args),
     jokesCount: (_, __, { dataSources }) =>
       dataSources.jokesAPI.getJokesCount(),
     categories: (_, __, { dataSources }) => dataSources.jokesAPI.getCategories()
