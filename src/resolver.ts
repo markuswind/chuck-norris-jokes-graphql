@@ -1,5 +1,8 @@
 import { gql } from 'apollo-server';
 
+import { IResolvers } from './generated/graphql';
+import { Context } from './index';
+
 /*
  * TYPE DEFS
  */
@@ -20,16 +23,20 @@ export const typeDefs = gql`
 `;
 
 /*
+ * HELPERS
+ */
+
+const getJokesAPI = (context: Context) => context.dataSources.jokesAPI;
+
+/*
  * RESOLVERS
  */
 
-export const resolvers = {
+export const resolvers: IResolvers = {
   Query: {
-    joke: (_, args, { dataSources }) => dataSources.jokesAPI.getJoke(args),
-    randomJokes: (_, args, { dataSources }) =>
-      dataSources.jokesAPI.getRandomJokes(args),
-    jokesCount: (_, __, { dataSources }) =>
-      dataSources.jokesAPI.getJokesCount(),
-    categories: (_, __, { dataSources }) => dataSources.jokesAPI.getCategories()
+    joke: (_, args, ctx) => getJokesAPI(ctx).getJoke(args),
+    randomJokes: (_, args, ctx) => getJokesAPI(ctx).getRandomJokes(args),
+    jokesCount: (_, __, ctx) => getJokesAPI(ctx).getJokesCount(),
+    categories: (_, __, ctx) => getJokesAPI(ctx).getCategories()
   }
 };

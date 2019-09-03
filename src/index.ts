@@ -4,17 +4,34 @@ import { JokesAPI } from './provider';
 import { resolvers, typeDefs } from './resolver';
 
 /*
+ * TYPES
+ */
+
+export interface Context {
+  dataSources: {
+    jokesAPI: JokesAPI;
+  };
+}
+
+/*
+ * DATA SOURCES
+ */
+
+const dataSources = (): Context['dataSources'] => {
+  return {
+    jokesAPI: new JokesAPI()
+  };
+};
+
+/*
  * SERVER
  */
 
 const server = new ApolloServer({
   typeDefs,
+  // @ts-ignore (FIXME: should be casted to default Resolvers type?)
   resolvers,
-  dataSources: () => {
-    return {
-      jokesAPI: new JokesAPI()
-    };
-  }
+  dataSources
 });
 
 server.listen().then(({ url }) => {

@@ -1,4 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
+import { QueryJokeArgs, QueryRandomJokesArgs } from './generated/graphql';
 
 /*
  * DATA SOURCE
@@ -10,15 +11,12 @@ export class JokesAPI extends RESTDataSource {
     this.baseURL = 'http://api.icndb.com/';
   }
 
-  public async getJoke(args: { id: number }) {
+  public async getJoke(args: QueryJokeArgs) {
     const result = await this.get(`jokes/${args.id}`);
     return result.value;
   }
 
-  public async getRandomJokes(args: {
-    limit: number;
-    categories?: ReadonlyArray<string>;
-  }) {
+  public async getRandomJokes(args: QueryRandomJokesArgs) {
     let url = `jokes/random/${args.limit}`;
 
     if (args.categories && args.categories.length) {
